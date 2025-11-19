@@ -1,13 +1,18 @@
 import { Outlet } from "react-router";
-import Header from "./header";
+import Header from "./Header";
+import { Footer } from "./Footer";
+import { useState } from "react";
 
 const Layout = () => {
+  const [search, setSearch] = useState("");
+
   return (
-    <div>
-      <Header />
+    <div className="bg-neutral-100">
+      <Header search={search} setSearch={setSearch} />
       <main>
-        <Outlet />
+        <Outlet context={{ search, setSearch }} />
       </main>
+      <Footer />
     </div>
   );
 };

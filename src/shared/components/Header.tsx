@@ -1,87 +1,80 @@
-import { TextField, Tabs, Tab } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import { useState } from "react";
+import { TextField } from "@mui/material";
 
-const Header = () => {
-  const [activeTab, setActiveTab] = useState(0);
+interface HeaderProps {
+  search: string;
+  setSearch: (value: string) => void;
+}
 
+const Header = ({ search, setSearch }: HeaderProps) => {
   return (
-    <header className="relative bg-linear-to-b from-green-600 to-green-700 min-h-[200px] flex flex-col items-center justify-center px-4">
-      {/* Banner Background */}
+    <header className="relative flex flex-col items-center justify-center px-4">
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-80"
+        className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: "url('/homeImage.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
-      <img
-        src="/titleHome.png"
-        alt="Rick and Morty"
-        className="w-[500px] max-w-full mb-8"
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 50%)",
+        }}
       />
-
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-4xl flex flex-col items-center gap-6 py-8">
-        {/* Logo/Title */}
-        <div className="text-center">
-          <h1 className="text-5xl font-bold text-green-300 drop-shadow-lg">
-            Rick and Morty
-          </h1>
-        </div>
-
-        {/* Search Bar - Material UI */}
-        <div className="w-full max-w-lg">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
+        <img
+          src="/titleHome.png"
+          alt="Rick and Morty"
+          className="w-[500px] max-w-full mb-8"
+        />
+      </div>
+      <div className="relative z-10 w-full max-w-4xl flex flex-col items-center gap-6 py-16">
+        <div className="w-full max-w-[1040px] max-h-14">
           <TextField
             fullWidth
             placeholder="Buscar personaje por nombre"
             variant="outlined"
-            InputProps={{
-              startAdornment: <SearchIcon className="mr-2 text-gray-500" />,
-              className: "bg-white/90 backdrop-blur-sm rounded-lg",
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <img
+                    src="/searchIcon.svg"
+                    alt="Search"
+                    className="m-2 w-5 h-5"
+                  />
+                ),
+              },
             }}
             sx={{
               "& .MuiOutlinedInput-root": {
+                paddingLeft: "4px",
+                backgroundColor: "rgba(0, 0, 0, 0.7)",
+                borderRadius: "8px",
+                color: "white",
                 "& fieldset": {
-                  border: "none",
+                  border: "1px solid #808c73",
                 },
                 "&:hover fieldset": {
-                  border: "none",
+                  border: "1px solid #9bab82",
                 },
                 "&.Mui-focused fieldset": {
-                  border: "2px solid #4ade80",
+                  border: "2px solid #9bab82",
                 },
+                "& .MuiInputBase-input": {
+                  padding: "18px 16px 18px 0px",
+                },
+              },
+              "& .MuiInputBase-input::placeholder": {
+                color: "#fafafa",
+                opacity: 1,
               },
             }}
           />
         </div>
-      </div>
-
-      {/* Tabs - Material UI */}
-      <div className="absolute bottom-0 left-20">
-        <Tabs
-          value={activeTab}
-          onChange={(e, newValue) => setActiveTab(newValue)}
-          sx={{
-            "& .MuiTab-root": {
-              color: "white",
-              textTransform: "none",
-              fontWeight: 500,
-              minHeight: "40px",
-            },
-            "& .Mui-selected": {
-              backgroundColor: "#22c55e",
-              borderRadius: "8px 8px 0 0",
-            },
-            "& .MuiTabs-indicator": {
-              display: "none",
-            },
-          }}
-        >
-          <Tab label="Todos" className="px-6" />
-          <Tab label="Favoritos" className="px-6" />
-        </Tabs>
       </div>
     </header>
   );
